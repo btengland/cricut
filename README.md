@@ -10,6 +10,10 @@ A simple Angular application that fetches and displays current weather condition
 
 The app uses the free GoWeather API (https://goweather.herokuapp.com/) for weather data.
 
+## Testing
+
+Run `npm test` to execute the unit tests using Vitest.
+
 ## Building for Production
 
 Run `npm run build` to compile the project. Artifacts are stored in `dist/`.

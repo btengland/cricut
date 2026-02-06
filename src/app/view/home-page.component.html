@@ -3,10 +3,10 @@
     <h1>Welcome to the Weather Page</h1>
     <p>Check the weather in your city</p>
 
-    <form class="weather-input" (ngSubmit)="fetchWeather()">
-      <input type="text" [(ngModel)]="city" placeholder="Enter city name" name="city" />
-      <button type="submit" [disabled]="loading()">Get Weather</button>
-    </form>
+    <div class="weather-input">
+      <input type="text" [value]="city()" (input)="city.set($any($event.target).value)" placeholder="Enter city name" name="city" />
+      <button type="button" (click)="fetchWeather()" [disabled]="loading()">Get Weather</button>
+    </div>
 
     <div *ngIf="errorMessage()" class="error-message">
       {{ errorMessage() }}
