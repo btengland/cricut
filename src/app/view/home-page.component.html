@@ -16,7 +16,7 @@
       Loading weather data...
     </div>
 
-    <div *ngIf="weather()" class="current-weather-section">
+    <div *ngIf="weather() && !loading()" class="current-weather-section">
       <div class="forecast-card today-card">
         <div class="forecast-day">Today</div>
         <div class="forecast-temp">{{ weather()?.temperature }}</div>
@@ -28,7 +28,7 @@
       </div>
     </div>
 
-    <div *ngIf="weather()?.forecast?.length" class="forecast-section">
+    <div *ngIf="weather()?.forecast?.length && !loading()" class="forecast-section">
       <h3>3-Day Forecast</h3>
       <div class="forecast-grid">
         <app-forecast *ngFor="let item of weather()?.forecast" [forecast]="item"></app-forecast>
