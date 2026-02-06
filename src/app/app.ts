@@ -1,16 +1,15 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, FormsModule],
   template: `
-    <h1>Hello, {{ title() }}</h1>
-
     <router-outlet />
   `,
   styles: [],
 })
 export class App {
-  protected readonly title = signal('cricut-app');
+  
 }
