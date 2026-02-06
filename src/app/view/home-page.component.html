@@ -1,27 +1,38 @@
-<h1>Welcome to the Weather Page</h1>
-<p>Check the weather in your city</p>
+<div class="container">
+  <div class="weather-card">
+    <h1>Welcome to the Weather Page</h1>
+    <p>Check the weather in your city</p>
 
-<input type="text" [(ngModel)]="city" placeholder="Enter city name" />
-<button (click)="fetchWeather()" [disabled]="loading()">Get Weather</button>
+    <form class="weather-input" (ngSubmit)="fetchWeather()">
+      <input type="text" [(ngModel)]="city" placeholder="Enter city name" name="city" />
+      <button type="submit" [disabled]="loading()">Get Weather</button>
+    </form>
 
-<div *ngIf="errorMessage()" class="error-message">
-	{{ errorMessage() }}
-</div>
+    <div *ngIf="errorMessage()" class="error-message">
+      {{ errorMessage() }}
+    </div>
 
-<div *ngIf="loading()">
-    Loading...
-</div>
+    <div *ngIf="loading()" class="loading">
+      Loading weather data...
+    </div>
 
-<div *ngIf="weather()">
-        <h2>Weather in {{ city() }}</h2>
-        <p>{{ weather()?.description }}</p>
-        <p>Temperature: {{ weather()?.temperature }}</p>
-        <p>Wind: {{ weather()?.wind }}</p>
-
-        <div *ngIf="weather()?.forecast?.length">
-            <h3>Forecast</h3>
-            <div *ngFor="let item of weather()?.forecast">
-                <app-forecast [forecast]="item"></app-forecast>
-            </div>
+    <div *ngIf="weather()" class="current-weather-section">
+      <div class="forecast-card today-card">
+        <div class="forecast-day">Today</div>
+        <div class="forecast-temp">{{ weather()?.temperature }}</div>
+        <div class="forecast-description">{{ weather()?.description }}</div>
+        <div class="forecast-wind">
+          <strong>Wind</strong>
+          {{ weather()?.wind }}
         </div>
+      </div>
+    </div>
+
+    <div *ngIf="weather()?.forecast?.length" class="forecast-section">
+      <h3>3-Day Forecast</h3>
+      <div class="forecast-grid">
+        <app-forecast *ngFor="let item of weather()?.forecast" [forecast]="item"></app-forecast>
+      </div>
+    </div>
+  </div>
 </div>
