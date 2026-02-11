@@ -1,8 +1,10 @@
-<div class="forecast-card" *ngIf="forecast">
-  <div class="forecast-day">{{ getDisplayDay(forecast.day) }}</div>
-  <div class="forecast-temp">{{ forecast.temperature }}</div>
-  <div class="forecast-wind">
-    <strong>Wind</strong>
-    {{ forecast.wind }}
+@if (forecast) {
+  <div class="forecast-card">
+    <div class="forecast-day">{{ getDisplayDay(forecast.day) }}</div>
+    <div class="forecast-temp">{{ forecast.temperature }}</div>
+    <div class="forecast-wind">
+      <strong>Wind</strong>
+      {{ forecast.wind }}
+    </div>
   </div>
-</div>
+}
