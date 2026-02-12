@@ -8,31 +8,41 @@
       <button type="button" (click)="fetchWeather()" [disabled]="loading()">Get Weather</button>
     </div>
 
-    <div *ngIf="errorMessage()" class="error-message">
-      {{ errorMessage() }}
-    </div>
+    @if (errorMessage()) {
+      <div class="error-message">
+        {{ errorMessage() }}
+      </div>
+    }
 
-    <div *ngIf="loading()" class="loading">
-      Loading weather data...
-    </div>
+    @if (loading()) {
+      <div class="loading">
+        Loading weather data...
+      </div>
+    }
 
-    <div *ngIf="weather() && !loading()" class="current-weather-section">
-      <div class="forecast-card today-card">
-        <div class="forecast-day">Today</div>
-        <div class="forecast-temp">{{ weather()?.temperature }}</div>
-        <div class="forecast-description">{{ weather()?.description }}</div>
-        <div class="forecast-wind">
-          <strong>Wind</strong>
-          {{ weather()?.wind }}
+    @if (weather() && !loading()) {
+      <div class="current-weather-section">
+        <div class="forecast-card today-card">
+          <div class="forecast-day">Today</div>
+          <div class="forecast-temp">{{ weather()?.temperature }}</div>
+          <div class="forecast-description">{{ weather()?.description }}</div>
+          <div class="forecast-wind">
+            <strong>Wind</strong>
+            {{ weather()?.wind }}
+          </div>
         </div>
       </div>
-    </div>
+    }
 
-    <div *ngIf="weather()?.forecast?.length && !loading()" class="forecast-section">
-      <h3>3-Day Forecast</h3>
-      <div class="forecast-grid">
-        <app-forecast *ngFor="let item of weather()?.forecast" [forecast]="item"></app-forecast>
+    @if (weather()?.forecast?.length && !loading()) {
+      <div class="forecast-section">
+        <h3>3-Day Forecast</h3>
+        <div class="forecast-grid">
+          @for (item of weather()?.forecast; track item) {
+            <app-forecast [forecast]="item"></app-forecast>
+          }
+        </div>
       </div>
-    </div>
+    }
   </div>
 </div>
