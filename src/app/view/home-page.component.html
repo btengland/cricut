@@ -1,48 +1,15 @@
 <div class="container">
-  <div class="weather-card">
-    <h1>Welcome to the Weather Page</h1>
-    <p>Check the weather in your city</p>
+  <h1>Home Page</h1>
+  
+  <nav>
+    <a routerLink="/">Home</a> | <a routerLink="/about">About</a>
+  </nav>
 
-    <div class="weather-input">
-      <input type="text" [value]="city()" (input)="city.set($any($event.target).value)" placeholder="Enter city name" name="city" />
-      <button type="button" (click)="fetchWeather()" [disabled]="loading()">Get Weather</button>
-    </div>
+  <p>Welcome to the home page of our Angular application!</p>
 
-    @if (errorMessage()) {
-      <div class="error-message">
-        {{ errorMessage() }}
-      </div>
-    }
+  <p>Current Counter: {{ counter() }}</p>
 
-    @if (loading()) {
-      <div class="loading">
-        Loading weather data...
-      </div>
-    }
+  <p>Child Title: {{ childTitle() }}</p>
 
-    @if (weather() && !loading()) {
-      <div class="current-weather-section">
-        <div class="forecast-card today-card">
-          <div class="forecast-day">Today</div>
-          <div class="forecast-temp">{{ weather()?.temperature }}</div>
-          <div class="forecast-description">{{ weather()?.description }}</div>
-          <div class="forecast-wind">
-            <strong>Wind</strong>
-            {{ weather()?.wind }}
-          </div>
-        </div>
-      </div>
-    }
-
-    @if (weather()?.forecast?.length && !loading()) {
-      <div class="forecast-section">
-        <h3>3-Day Forecast</h3>
-        <div class="forecast-grid">
-          @for (item of weather()?.forecast; track item) {
-            <app-forecast [forecast]="item"></app-forecast>
-          }
-        </div>
-      </div>
-    }
-  </div>
+<app-forecast-page [data]="{ increment: increment }" (titleChange)="onTitleChange($event)"></app-forecast-page>
 </div>

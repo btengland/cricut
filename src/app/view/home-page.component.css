@@ -1,14 +1,6 @@
 /* Home page specific styles */
-.weather-card h1 {
-  text-align: center;
-  color: #333;
-  margin-bottom: 10px;
-  font-size: 2.5rem;
-}
-
-.weather-card > p {
-  text-align: center;
-  color: #666;
-  margin-bottom: 30px;
-  font-size: 1.1rem;
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
