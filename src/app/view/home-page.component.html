@@ -12,4 +12,7 @@
   <p>Child Title: {{ childTitle() }}</p>
 
 <app-forecast-page [data]="{ increment: increment }" (titleChange)="onTitleChange($event)"></app-forecast-page>
+
+  <h2>About Section</h2>
+  <app-about (itemSelected)="onItemSelected($event)"></app-about>
 </div>

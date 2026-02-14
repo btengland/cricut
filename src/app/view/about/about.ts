@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
     </p>
     <ul class="item-list">
       @for (item of items; track item) {
-        <li class="item">{{ item }}</li>
+        <li class="item" (click)="onItemClick(item)">{{ item }}</li>
       }
     </ul>
   `,
@@ -32,9 +32,19 @@ import { CommonModule } from '@angular/common';
       padding: 10px;
       border-radius: 4px;
       border: 1px solid #dee2e6;
+      cursor: pointer;
+    }
+    .item:hover {
+      background-color: #e9ecef;
     }
   `,
 })
 export class About {
   items = ['Item 1', 'Item 2', 'Item 3'];
+
+  @Output() itemSelected = new EventEmitter<string>();
+
+  onItemClick(item: string) {
+    this.itemSelected.emit(item);
+  }
 }
