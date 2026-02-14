@@ -1,0 +1,51 @@
+<div class="weather-container">
+  <h2>Weather Information</h2>
+
+  <div class="search-section">
+    <input
+      type="text"
+      [(ngModel)]="city"
+      placeholder="Enter city name"
+      (keyup.enter)="getWeatherData()"
+      class="city-input"
+    >
+    <button
+      (click)="getWeatherData()"
+      [disabled]="loading()"
+      class="search-btn"
+    >
+      {{ loading() ? 'Loading...' : 'Get Weather' }}
+    </button>
+  </div>
+
+  @if (error()) {
+    <div class="error-message">
+      {{ error() }}
+    </div>
+  }
+
+  @if (weatherData()) {
+    <div class="weather-info">
+      <h3>Weather for {{ city() }}</h3>
+      <div class="weather-details">
+        <p><strong>Temperature:</strong> {{ weatherData().temperature }}</p>
+        <p><strong>Description:</strong> {{ weatherData().description }}</p>
+        @if (weatherData().wind) {
+          <p><strong>Wind:</strong> {{ weatherData().wind }}</p>
+        }
+        @if (weatherData().forecast && weatherData().forecast.length > 0) {
+          <div class="forecast">
+            <h4>Forecast:</h4>
+            <ul>
+              @for (day of weatherData().forecast; track $index) {
+                <li>
+                  <strong>{{ day.day }}:</strong> {{ day.temperature }} - {{ day.wind }}
+                </li>
+              }
+            </ul>
+          </div>
+        }
+      </div>
+    </div>
+  }
+</div>
