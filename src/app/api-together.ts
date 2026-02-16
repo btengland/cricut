@@ -14,9 +14,15 @@ import { mergeMap, catchError } from 'rxjs/operators';
       <input [(ngModel)]="id" placeholder="Enter ID" />
       <button (click)="fetchData()">Fetch Data</button>
 
-      <div *ngIf="loading()">Loading...</div>
-      <div *ngIf="error()" style="color:red;">Error: {{ error() }}</div>
-      <pre *ngIf="data()">{{ data() | json }}</pre>
+      @if (loading()) {
+        <div>Loading...</div>
+      }
+      @if (error()) {
+        <div style="color:red;">Error: {{ error() }}</div>
+      }
+      @if (data()) {
+        <pre>{{ data() | json }}</pre>
+      }
     </div>
   `
 })
@@ -69,9 +75,6 @@ export class MultiFetchComponent {
     });
   }
 }
-
-
-// Yes, exactly:
 
 // from(fetch(url))
 //   .pipe(
