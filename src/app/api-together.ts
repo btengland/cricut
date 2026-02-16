@@ -1,7 +1,7 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { from } from 'rxjs';
+import { from, Subscription } from 'rxjs';
 import { mergeMap, catchError } from 'rxjs/operators';
 
 @Component({
@@ -26,11 +26,12 @@ import { mergeMap, catchError } from 'rxjs/operators';
     </div>
   `
 })
-export class MultiFetchComponent {
+export class MultiFetchComponent implements OnDestroy {
   id = signal<string>('');                 // User input
   data = signal<any>(null);                // Final fetched data
   loading = signal<boolean>(false);
   error = signal<string>('');
+  private subscription?: Subscription;
 
   fetchData() {
     if (!this.id().trim()) {
@@ -42,8 +43,11 @@ export class MultiFetchComponent {
     this.error.set('');
     this.data.set(null);
 
+    // Unsubscribe from any previous subscription
+    this.subscription?.unsubscribe();
+
     // Step 1 → Step 2 → Step 3
-    from(fetch(`https://jsonplaceholder.typicode.com/posts/${this.id()}`)).pipe(
+    this.subscription = from(fetch(`https://jsonplaceholder.typicode.com/posts/${this.id()}`)).pipe(
       mergeMap(res1 => {
         if (!res1.ok) throw new Error('Step 1 failed');
         return from(res1.json());                   // Step 1: parse JSON
@@ -73,6 +77,10 @@ export class MultiFetchComponent {
       },
       error: () => this.loading.set(false)
     });
+  }
+
+  ngOnDestroy() {
+    this.subscription?.unsubscribe();
   }
 }
 
