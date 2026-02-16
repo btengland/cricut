@@ -16,7 +16,7 @@ export class WeatherComponent {
   loading = signal<boolean>(false);
   error = signal<string>('');
 
-  async getWeatherData() {
+  getWeatherData() {
     if (!this.city().trim()) {
       this.error.set('Please enter a city name');
       return;
