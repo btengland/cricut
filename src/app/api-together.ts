@@ -69,3 +69,29 @@ export class MultiFetchComponent {
     });
   }
 }
+
+
+// Yes, exactly:
+
+// from(fetch(url))
+//   .pipe(
+//     mergeMap(res => from(res.json())),  // Step 1: parse JSON
+//     mergeMap(data => fetch(...)),       // Step 2: another fetch
+//     mergeMap(res => from(res.json())),  // Step 3: parse JSON
+//     catchError(err => {...})            // If any step throws, handle it
+//   )
+//   .subscribe({
+//     next: value => {...},               // Runs when the final value is ready
+//     error: err => {...}                 // Runs if any error happens
+//   });
+
+
+// from(fetch(...)) → converts Promise → Observable.
+
+// .pipe(...) → runs each mergeMap in order, asynchronously, but one at a time for each emitted value.
+
+// catchError → intercepts errors in the whole pipeline.
+
+// .subscribe() → “start listening” to the Observable. Without this, nothing runs.
+
+// Think of subscribe() as “React’s useEffect with a fetch”: the code inside only runs when you actually subscribe.
